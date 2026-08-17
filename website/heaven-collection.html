@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heaven Collection — Fashion Store</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #111;
+      --white: #fff;
+      --gray: #f5f5f5;
+      --mid: #888;
+      --accent: #c8a96e;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--black);
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-icons {
+      display: flex;
+      gap: 18px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .cart-icon { position: relative; }
+
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--accent);
+      color: white;
+      font-size: 10px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 90vh;
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px;
+    }
+
+    .hero-text .tag {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hero-text h1 {
+      font-size: 64px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .hero-text p {
+      color: var(--mid);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 400px;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 36px;
+      background: var(--black);
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 2px solid var(--black);
+      cursor: pointer;
+      transition: all 0.2s;
+      width: fit-content;
+    }
+
+    .btn:hover {
+      background: white;
+      color: var(--black);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--black);
+      margin-left: 16px;
+    }
+
+    .btn-outline:hover {
+      background: var(--black);
+      color: white;
+    }
+
+    .hero-img {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent);
+    }
+
+    /* CATEGORIES */
+    .section { padding: 80px 60px; }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-title p {
+      color: var(--mid);
+      margin-top: 10px;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .category-card {
+      position: relative;
+      height: 280px;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .cat-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      transition: transform 0.4s;
+    }
+
+    .category-card:hover .cat-bg { transform: scale(1.05); }
+
+    .cat-1 .cat-bg { background: linear-gradient(135deg, #667eea, #764ba2); }
+    .cat-2 .cat-bg { background: linear-gradient(135deg, #f093fb, #f5576c); }
+    .cat-3 .cat-bg { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+    .cat-4 .cat-bg { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+
+    .cat-label {
+      position: relative;
+      z-index: 1;
+      color: white;
+      padding: 20px;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    /* PRODUCTS */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .product-card {
+      cursor: pointer;
+    }
+
+    .product-img {
+      height: 320px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover .product-img { transform: translateY(-4px); }
+
+    .product-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: white;
+      font-size: 11px;
+      padding: 4px 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .add-to-cart {
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      right: 0;
+      background: var(--black);
+      color: white;
+      text-align: center;
+      padding: 14px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: bottom 0.3s;
+    }
+
+    .product-card:hover .add-to-cart { bottom: 0; }
+
+    .product-info h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .product-info .price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .product-info .old-price {
+      font-size: 13px;
+      color: var(--mid);
+      text-decoration: line-through;
+      margin-left: 8px;
+    }
+
+    .stars { color: var(--accent); font-size: 12px; margin-bottom: 6px; }
+
+    .p1  { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+    .p2  { background: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
+    .p3  { background: linear-gradient(135deg, #d4fc79, #96e6a1); }
+    .p4  { background: linear-gradient(135deg, #f6d365, #fda085); }
+    .p5  { background: linear-gradient(135deg, #89f7fe, #66a6ff); }
+    .p6  { background: linear-gradient(135deg, #fddb92, #d1fdff); }
+    .p7  { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+    .p8  { background: linear-gradient(135deg, #fccb90, #d57eeb); }
+    .p9  { background: linear-gradient(135deg, #cfd9df, #e2ebf0); }
+    .p10 { background: linear-gradient(135deg, #b8c6db, #f5f7fa); }
+    .p11 { background: linear-gradient(135deg, #c3cfe2, #c3cfe2); }
+    .p12 { background: linear-gradient(135deg, #e0c3fc, #8ec5fc); }
+    .p13 { background: linear-gradient(135deg, #f5f7fa, #c3cfe2); }
+    .p14 { background: linear-gradient(135deg, #667eea, #764ba2); }
+    .p15 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+    .p16 { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
+    .p17 { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+    .p18 { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+    .p19 { background: linear-gradient(135deg, #fccb90, #d57eeb); }
+    .p20 { background: linear-gradient(135deg, #f6d365, #fda085); }
+
+    /* GENDER SECTION TABS */
+    .gender-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 50px;
+    }
+
+    .gender-tab {
+      padding: 14px 40px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 2px solid var(--black);
+      background: white;
+      color: var(--black);
+      transition: all 0.2s;
+    }
+
+    .gender-tab.active, .gender-tab:hover {
+      background: var(--black);
+      color: white;
+    }
+
+    /* BANNER */
+    .banner {
+      background: var(--black);
+      color: white;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 400px;
+    }
+
+    .banner-text {
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .banner-text .tag { color: var(--accent); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+
+    .banner-text h2 { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+
+    .banner-text p { color: #aaa; font-size: 15px; line-height: 1.7; margin-bottom: 36px; }
+
+    .btn-gold {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .btn-gold:hover { background: transparent; color: var(--accent); }
+
+    .banner-img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 140px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+    }
+
+    /* FEATURES */
+    .features {
+      background: var(--gray);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 60px;
+      gap: 40px;
+    }
+
+    .feature {
+      text-align: center;
+    }
+
+    .feature-icon { font-size: 36px; margin-bottom: 16px; }
+
+    .feature h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+
+    .feature p { font-size: 13px; color: var(--mid); line-height: 1.6; }
+
+    /* NEWSLETTER */
+    .newsletter {
+      padding: 80px 60px;
+      text-align: center;
+      background: white;
+    }
+
+    .newsletter h2 { font-size: 36px; font-weight: 800; margin-bottom: 12px; }
+
+    .newsletter p { color: var(--mid); margin-bottom: 32px; }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 16px 20px;
+      border: 2px solid var(--black);
+      border-right: none;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .newsletter-form button {
+      padding: 16px 28px;
+      background: var(--black);
+      color: white;
+      border: 2px solid var(--black);
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .newsletter-form button:hover { background: var(--accent); border-color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      color: white;
+      padding: 60px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-brand .logo { color: white; margin-bottom: 16px; display: block; }
+
+    .footer-brand p { color: #777; font-size: 13px; line-height: 1.7; margin-bottom: 24px; }
+
+    .footer-socials { display: flex; gap: 12px; font-size: 20px; }
+
+    footer h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+
+    footer ul { list-style: none; }
+
+    footer ul li { margin-bottom: 10px; }
+
+    footer ul a { color: #777; text-decoration: none; font-size: 13px; transition: color 0.2s; }
+
+    footer ul a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      background: #000;
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #555;
+      letter-spacing: 1px;
+    }
+
+    /* CART SIDEBAR */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+    }
+
+    .cart-sidebar {
+      position: fixed;
+      right: -400px;
+      top: 0;
+      bottom: 0;
+      width: 380px;
+      background: white;
+      z-index: 201;
+      transition: right 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-sidebar.open { right: 0; }
+    .cart-overlay.open { display: block; }
+
+    .cart-header {
+      padding: 24px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-header h3 { font-size: 18px; font-weight: 700; }
+
+    .close-cart { font-size: 24px; cursor: pointer; background: none; border: none; }
+
+    .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+
+    .cart-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-item-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    .cart-item-info { flex: 1; }
+
+    .cart-item-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+
+    .cart-item-info .item-price { color: var(--accent); font-weight: 700; font-size: 14px; }
+
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #ddd;
+      background: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .remove-item { color: #f00; cursor: pointer; font-size: 12px; margin-top: 4px; display: block; }
+
+    .cart-empty { text-align: center; padding: 60px 20px; color: var(--mid); }
+
+    .cart-empty .empty-icon { font-size: 60px; margin-bottom: 16px; }
+
+    .cart-footer {
+      padding: 20px 24px;
+      border-top: 1px solid #eee;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: var(--black);
+      color: white;
+      border: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .checkout-btn:hover { background: var(--accent); }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--black);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-size: 14px;
+      z-index: 300;
+      transition: transform 0.3s;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Heaven <span>C</span>ollection</div>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#mens">Men</a></li>
+    <li><a href="#womens">Women</a></li>
+    <li><a href="#">Kids</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="nav-icons">
+    <span>🔍</span>
+    <span>♡</span>
+    <div class="cart-icon" onclick="toggleCart()">
+      🛒
+      <div class="cart-badge" id="cartBadge">0</div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="tag">New Collection 2026</p>
+    <h1>Dress to<br/>Express</h1>
+    <p>Discover premium fashion that blends contemporary style with timeless elegance. From everyday basics to statement pieces.</p>
+    <div>
+      <a href="#products" class="btn">Shop Now</a>
+      <a href="#" class="btn btn-outline">View Lookbook</a>
+    </div>
+  </div>
+  <div class="hero-img">👗</div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="section-title">
+    <h2>Shop by Category</h2>
+    <p>Find your perfect style in our curated collections</p>
+  </div>
+  <div class="categories">
+    <div class="category-card cat-1" onclick="scrollToSection('mens')">
+      <div class="cat-bg">👔</div>
+      <div class="cat-label">Men's</div>
+    </div>
+    <div class="category-card cat-2" onclick="scrollToSection('womens')">
+      <div class="cat-bg">👗</div>
+      <div class="cat-label">Women's</div>
+    </div>
+    <div class="category-card cat-3">
+      <div class="cat-bg">🧦</div>
+      <div class="cat-label">Accessories</div>
+    </div>
+    <div class="category-card cat-4">
+      <div class="cat-bg">👟</div>
+      <div class="cat-label">Footwear</div>
+    </div>
+  </div>
+</section>
+
+<!-- MEN'S SECTION -->
+<section class="section" id="mens" style="background: #f0f4ff;">
+  <div class="section-title">
+    <h2>Men's Collection</h2>
+    <p>Sharp, modern, and effortlessly stylish — made for every man</p>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card" onclick="addToCart('Formal Suit Set', 299)">
+      <div class="product-img p9">
+        🤵
+        <span class="product-tag">New</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Formal Suit Set</h3>
+        <span class="price">$299.00</span>
+        <span class="old-price">$380.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Classic White Shirt', 55)">
+      <div class="product-img p10">
+        👕
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Classic White Shirt</h3>
+        <span class="price">$55.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Slim Fit Jeans', 80)">
+      <div class="product-img p11">
+        👖
+        <span class="product-tag">Sale</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Slim Fit Jeans</h3>
+        <span class="price">$80.00</span>
+        <span class="old-price">$110.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Polo T-Shirt', 45)">
+      <div class="product-img p12">
+        👕
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Polo T-Shirt</h3>
+        <span class="price">$45.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Casual Hoodie', 70)">
+      <div class="product-img p13">
+        🧥
+        <span class="product-tag">Hot</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Casual Hoodie</h3>
+        <span class="price">$70.00</span>
+        <span class="old-price">$90.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Chino Trousers', 65)">
+      <div class="product-img p14">
+        👖
+        <span class="product-tag">New</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Chino Trousers</h3>
+        <span class="price">$65.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Bomber Jacket', 120)">
+      <div class="product-img p5">
+        🧥
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Bomber Jacket</h3>
+        <span class="price">$120.00</span>
+        <span class="old-price">$150.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Graphic Tee', 35)">
+      <div class="product-img p3">
+        👕
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Graphic Tee</h3>
+        <span class="price">$35.00</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WOMEN'S SECTION -->
+<section class="section" id="womens" style="background: #fff0f5;">
+  <div class="section-title">
+    <h2>Women's Collection</h2>
+    <p>Elegant, bold, and beautifully crafted — for the modern woman</p>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card" onclick="addToCart('Evening Gown', 180)">
+      <div class="product-img p15">
+        👗
+        <span class="product-tag">New</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Evening Gown</h3>
+        <span class="price">$180.00</span>
+        <span class="old-price">$240.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Casual Crop Top', 35)">
+      <div class="product-img p16">
+        👚
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Casual Crop Top</h3>
+        <span class="price">$35.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('High-Waist Jeans', 85)">
+      <div class="product-img p17">
+        👖
+        <span class="product-tag">Sale</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>High-Waist Jeans</h3>
+        <span class="price">$85.00</span>
+        <span class="old-price">$115.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Silk Blouse', 90)">
+      <div class="product-img p18">
+        👚
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Silk Blouse</h3>
+        <span class="price">$90.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Flared Mini Skirt', 50)">
+      <div class="product-img p19">
+        🩱
+        <span class="product-tag">New</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Flared Mini Skirt</h3>
+        <span class="price">$50.00</span>
+        <span class="old-price">$70.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Bodycon Dress', 110)">
+      <div class="product-img p20">
+        👗
+        <span class="product-tag">Hot</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Bodycon Dress</h3>
+        <span class="price">$110.00</span>
+        <span class="old-price">$140.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Trench Coat', 165)">
+      <div class="product-img p6">
+        🧥
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Trench Coat</h3>
+        <span class="price">$165.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Pleated Wide Pants', 75)">
+      <div class="product-img p7">
+        👖
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Pleated Wide Pants</h3>
+        <span class="price">$75.00</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products" style="background: #fafafa; padding-top: 20px;">
+  <div class="section-title">
+    <h2>Featured Products</h2>
+    <p>Hand-picked styles for the season</p>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card" onclick="addToCart('Floral Summer Dress', 89)">
+      <div class="product-img p1">
+        👗
+        <span class="product-tag">New</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Floral Summer Dress</h3>
+        <span class="price">$89.00</span>
+        <span class="old-price">$120.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Classic Oxford Shirt', 65)">
+      <div class="product-img p2">
+        👔
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Classic Oxford Shirt</h3>
+        <span class="price">$65.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Slim Fit Chinos', 75)">
+      <div class="product-img p3">
+        👖
+        <span class="product-tag">Sale</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Slim Fit Chinos</h3>
+        <span class="price">$75.00</span>
+        <span class="old-price">$95.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Boho Maxi Skirt', 55)">
+      <div class="product-img p4">
+        🩱
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Boho Maxi Skirt</h3>
+        <span class="price">$55.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Denim Jacket', 110)">
+      <div class="product-img p5">
+        🧥
+        <span class="product-tag">Hot</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Denim Jacket</h3>
+        <span class="price">$110.00</span>
+        <span class="old-price">$140.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Linen Blazer', 130)">
+      <div class="product-img p6">
+        🥼
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Linen Blazer</h3>
+        <span class="price">$130.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Wrap Midi Dress', 95)">
+      <div class="product-img p7">
+        👘
+        <span class="product-tag">New</span>
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★★</div>
+        <h3>Wrap Midi Dress</h3>
+        <span class="price">$95.00</span>
+        <span class="old-price">$125.00</span>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="addToCart('Premium Sneakers', 85)">
+      <div class="product-img p8">
+        👟
+        <div class="add-to-cart">+ Add to Cart</div>
+      </div>
+      <div class="product-info">
+        <div class="stars">★★★★☆</div>
+        <h3>Premium Sneakers</h3>
+        <span class="price">$85.00</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SALE BANNER -->
+<section class="banner">
+  <div class="banner-text">
+    <p class="tag">Limited Time Offer</p>
+    <h2>Get 30% Off<br/>Summer Sale</h2>
+    <p>Stock up on your wardrobe essentials. Use code <strong style="color:var(--accent)">SUMMER30</strong> at checkout.</p>
+    <a href="#" class="btn btn-gold">Shop the Sale</a>
+  </div>
+  <div class="banner-img">☀️</div>
+</section>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feature">
+    <div class="feature-icon">🚚</div>
+    <h4>Free Shipping</h4>
+    <p>On all orders over $75. Fast delivery to your door within 3-5 business days.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">↩️</div>
+    <h4>Easy Returns</h4>
+    <p>30-day hassle-free returns. No questions asked return policy.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🔒</div>
+    <h4>Secure Payment</h4>
+    <p>Your payment information is encrypted and always protected.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">💬</div>
+    <h4>24/7 Support</h4>
+    <p>Our team is always here to help you with any questions.</p>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2>Stay in Style</h2>
+  <p>Subscribe for exclusive deals, new arrivals, and style tips delivered to your inbox.</p>
+  <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+    <input type="email" placeholder="Enter your email address" required />
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="logo">Heaven <span>C</span>ollection</span>
+    <p>Premium fashion for every occasion. We believe style is a form of self-expression.</p>
+    <div class="footer-socials">
+      <span>📘</span>
+      <span>📸</span>
+      <span>🐦</span>
+      <span>📌</span>
+    </div>
+  </div>
+  <div>
+    <h4>Shop</h4>
+    <ul>
+      <li><a href="#">Men's Collection</a></li>
+      <li><a href="#">Women's Collection</a></li>
+      <li><a href="#">Kids</a></li>
+      <li><a href="#">Accessories</a></li>
+      <li><a href="#">Sale</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Help</h4>
+    <ul>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Shipping Info</a></li>
+      <li><a href="#">Returns</a></li>
+      <li><a href="#">Size Guide</a></li>
+      <li><a href="#">Track Order</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Company</h4>
+    <ul>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Press</a></li>
+      <li><a href="#">Sustainability</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2026 Heaven Collection. All rights reserved.
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="close-cart" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="empty-icon">🛒</div>
+      <p>Your cart is empty</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+    <button class="checkout-btn">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  let cart = [];
+
+  const imgMap = {
+    'Floral Summer Dress':  { img: 'p1',  icon: '👗' },
+    'Classic Oxford Shirt': { img: 'p2',  icon: '👔' },
+    'Slim Fit Chinos':      { img: 'p3',  icon: '👖' },
+    'Boho Maxi Skirt':      { img: 'p4',  icon: '🩱' },
+    'Denim Jacket':         { img: 'p5',  icon: '🧥' },
+    'Linen Blazer':         { img: 'p6',  icon: '🥼' },
+    'Wrap Midi Dress':      { img: 'p7',  icon: '👘' },
+    'Premium Sneakers':     { img: 'p8',  icon: '👟' },
+    'Formal Suit Set':      { img: 'p9',  icon: '🤵' },
+    'Classic White Shirt':  { img: 'p10', icon: '👕' },
+    'Slim Fit Jeans':       { img: 'p11', icon: '👖' },
+    'Polo T-Shirt':         { img: 'p12', icon: '👕' },
+    'Casual Hoodie':        { img: 'p13', icon: '🧥' },
+    'Chino Trousers':       { img: 'p14', icon: '👖' },
+    'Bomber Jacket':        { img: 'p5',  icon: '🧥' },
+    'Graphic Tee':          { img: 'p3',  icon: '👕' },
+    'Evening Gown':         { img: 'p15', icon: '👗' },
+    'Casual Crop Top':      { img: 'p16', icon: '👚' },
+    'High-Waist Jeans':     { img: 'p17', icon: '👖' },
+    'Silk Blouse':          { img: 'p18', icon: '👚' },
+    'Flared Mini Skirt':    { img: 'p19', icon: '🩱' },
+    'Bodycon Dress':        { img: 'p20', icon: '👗' },
+    'Trench Coat':          { img: 'p6',  icon: '🧥' },
+    'Pleated Wide Pants':   { img: 'p7',  icon: '👖' },
+  };
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function addToCart(name, price) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) existing.qty++;
+    else cart.push({ name, price, qty: 1 });
+    updateCart();
+    showToast(`${name} added to cart!`);
+    openCart();
+  }
+
+  function removeFromCart(name) {
+    cart = cart.filter(i => i.name !== name);
+    updateCart();
+  }
+
+  function changeQty(name, delta) {
+    const item = cart.find(i => i.name === name);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) removeFromCart(name);
+    else updateCart();
+  }
+
+  function updateCart() {
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+
+    document.getElementById('cartBadge').textContent = count;
+    document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+
+    const cartItems  = document.getElementById('cartItems');
+    const cartFooter = document.getElementById('cartFooter');
+
+    if (cart.length === 0) {
+      cartItems.innerHTML = `<div class="cart-empty"><div class="empty-icon">🛒</div><p>Your cart is empty</p></div>`;
+      cartFooter.style.display = 'none';
+      return;
+    }
+
+    cartFooter.style.display = 'block';
+    cartItems.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-img ${imgMap[item.name]?.img || 'p1'}">${imgMap[item.name]?.icon || '👕'}</div>
+        <div class="cart-item-info">
+          <h4>${item.name}</h4>
+          <div class="item-price">$${item.price.toFixed(2)}</div>
+          <div class="cart-item-qty">
+            <button class="qty-btn" onclick="changeQty('${item.name}', -1)">−</button>
+            <span>${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty('${item.name}', 1)">+</button>
+          </div>
+          <span class="remove-item" onclick="removeFromCart('${item.name}')">Remove</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function toggleCart() {
+    document.getElementById('cartSidebar').classList.toggle('open');
+    document.getElementById('cartOverlay').classList.toggle('open');
+  }
+
+  function openCart() {
+    document.getElementById('cartSidebar').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    showToast('Thanks for subscribing!');
+    e.target.reset();
+  }
+</script>
+</body>
+</html>
