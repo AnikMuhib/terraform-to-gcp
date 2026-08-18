@@ -1,3 +1,6 @@
 .terraform/
 .terraform.lock.hcl
 *-670a6b2b7b81.json
+*.json
+.terraform/
+terraform.tfstate*
